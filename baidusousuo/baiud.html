@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>baidusearch</title>
+	<script src="jquery-1.12.3.js"></script>
+</head>
+<style type="text/css">
+	* {margin:0; padding:0;}
+.wrap {width:655px;height:100px; margin:0 auto;}
+.wrap .inp1 {  width:550px; height:34px; border:1px solid #333;}
+.wrap .inp2 {  width:100px; height:36px; border:none; background:#3385ff; color:#fff; text-align:center; line-height:36px;}
+</style>
+<body>
+	<div class="wrap">
+		<img src="bd_logo1.png" alt="baidu">
+		<p><input class="inp1" type="text"/><input class="inp2" type="button" value="百度一下"></p>
+		<div class="box" style=" width:550px; height:200px; border:1px solid #333; border-top:none;"></div>
+	</div>
+	<script>
+		// $( function () {
+	    $('.box').hide();
+        $('.inp1').keyup(function() {
+            var text = $('.inp1').val();
+		    if (text=="") {
+			   $('.box').hide();
+			// return;
+		     }else{
+		     	$('.box').show();
+		     };
+        	   $.ajax({
+			 	type:"get",
+		 		url:"https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd="+$('.inp1').val(),
+		 		async:false,
+		 		dataType:"jsonp",
+		 		jsonp:"cb",
+		 		success:function (data) {
+		 			console.log(data.s);
+		 			$(".box").text("");
+		 			for (var i in data.s) {
+		 				console.log(data.s[i]);
+		 				$(".box").append("<p>"+data.s[i]+"</p>")
+		 			};
+		 		}
+			 })
+        })
+
+		// })
+
+	</script>
+</body>
+
+</html>
